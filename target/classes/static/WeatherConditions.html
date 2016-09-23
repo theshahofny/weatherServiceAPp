@@ -1,143 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="WeatherService">
 <head>
 <title>Weather</title>
 <style>
 
-h1 {
-color: orange;
+h1{
+color: black;
 text-align: center;
-background-color: green;
-border: 10px ;
-border-radius: 10px;
+background-color: gray;
+border: 6xx ;
+border-radius: 6px;
 border-style: solid;
 margin-top: 100px;
+margin-left: 500px;
+margin-right:500px;
+box-shadow: 10px 10px 10px 10px #808080, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+background-color: silver;
 
 }
 
+ul {
+	align:left;
+   list-style: square inside url("http://vignette4.wikia.nocookie.net/pokemontowerdefense/images/f/f2/Pikachu!.gif/revision/latest?cb=20120207022113");
+   font-size: 120%;
+}
+
+#forecastHeading{
+font-weight: bold;
+font-size: 125%;
+}
+
+#LocationId{
+font-size: 150%;
+text-weight: bold;
+}
+
 body{
-	background:url('/situationreport.jpg');
+	background:url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/79f7ed10740083.560ea32629e88.gif');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100%;
 }
 
-
-.dropbtn {
-    background-color: gray;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+form{
+	text-align:center;
+	padding: 2.5% 2.5%;
+	border: 2px ;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px 10px #808080, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+	background-color: silver;
+	margin-left:500px;
+	margin-right:500px;
 }
 
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
-}
-#myInput {
-    border-box: box-sizing;
-    background-image: url('searchicon.png');
-    background-position: 14px 12px;
-    background-repeat: no-repeat;
-    font-size: 16px;
-    padding: 14px 20px 12px 45px;
-    border: none;
+#forecastId{
+font-size: 110%;
 }
 
-.dropdown {
-    margin : 200px 400px;
-    display: inline-block;
-   	
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f6f6f6;
-    min-width: 230px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown a:hover {background-color: #ddd}
-
-.show {display:block;}
 
 </style>
 </head>
 
-<body>
-<h1>Get Your Weather Here</h1>
-
-<div class="dropdown">
-<button onclick="myFunction()" class="dropbtn">Locations</button>
-  <div id="myDropdown" class="dropdown-content">
-    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-    <a href="weatherService/MD/Columbia">Columbia, Maryland</a>
-    <a href="weatherService/NY/New_York">New York, NY</a>
-    <a href="weatherService/"></a>
-    <a href="#contact">Contact</a>
-    <a href="#custom">Custom</a>
-    <a href="#support">Support</a>
-    <a href="#tools">Tools</a>
-  </div>
-</div>
-
-	<section id="detailSection" class="detail-Section">
-		<br id="detail"> </br>
-	</section>
-
+<body ng-controller = "WeatherController as WC">
+	<h1>&#9730 &#9925 Get Your Weather Here &#9729 &#10052</h1>
+	
+	  	<form ng-submit= "WC.find()">
+	  		<label id= "LocationId" for="weather"> Enter Location: </label>
+	  		<input type="text" placeholder="City" onfocus="this.placeholder=''" ng-model="WC.weatherCity">
+	    	<input type="text" placeholder="State" onfocus="this.placeholder=''" ng-model= "WC.weatherState">
+	    	<input type ="submit" value ="Get Weather!" >
+		</form>
+		<br>
+		<br>
+		<form>
+		<div id="forecastHeading">The Current Forecast for {{WC.weatherCity}}, {{WC.weatherState}} is:</div>
+		<ul>
+		<li ng-repeat="weather in WC.currentWeather">Conditions:{{WC.currentWeather.current_observation.weather}}</li>  
+		<li ng-repeat="weather in WC.currentWeather">Degrees: {{WC.currentWeather.current_observation.temp_f}} &deg!</li>
+		</ul>
+		</form>
+		
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"
 	integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
 	crossorigin="anonymous"></script>
 	
+<script src = "js/angular.min.js"></script>
+
 <script type="text/javascript">
 
-$(document).ready(function() {
-        $.getJSON("/weatherService/", myFunction);       
-});
-
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+angular.module('WeatherService', []).controller("WeatherController", function($http)
+{
+  this.currentWeather = [];
+  this.find = function(response)
+  {
+    var self = this;
+  
+    $http.get('/weatherService/' + self.weatherState + "/" + self.weatherCity).then(function (response){
+			self.currentWeather = response.data;
+			
+    });
     
-}
-
-function filterFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    div = document.getElementById("myDropdown");
-    a = div.getElementsByTagName("a");
-    for (i = 0; i < a.length; i++) {
-        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
-        } else {
-            a[i].style.display = "none";
-        }
-    }
-}
-
-
-function weatherPage(){
-	 $.getJSON("./weatherService/" + $("#state").val() + "/" + $("#city").val(), //function here to do something with response){		 
-	 });
-	
-}
-
-function getWeather(response){
-	var weather = response.current_observation.weather;
-	var temp = response.current_observation.temp_f;
-	document.getElementById("weather").innerHTML = weather + " " + temp;
-	
-};
+  }
+});
 
 </script> 
 

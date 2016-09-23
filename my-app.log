@@ -41,3 +41,13 @@
 09:44:12.076 [main] DEBUG web.SpringStarter - Running with Spring Boot v1.4.0.RELEASE, Spring v4.3.2.RELEASE
 09:44:12.076 [main] INFO web.SpringStarter - No active profile set, falling back to default profiles: default
 09:44:14.315 [main] INFO web.SpringStarter - Started SpringStarter in 2.645 seconds (JVM running for 8.272)
+09:26:40.480 [main] INFO web.SpringStarter - Starting web app
+09:26:41.142 [main] INFO web.SpringStarter - Starting SpringStarter on PC13 with PID 23472 (C:\Users\admin\workspace\WeatherService\target\classes started by admin in C:\Users\admin\workspace\WeatherService)
+09:26:41.143 [main] DEBUG web.SpringStarter - Running with Spring Boot v1.4.0.RELEASE, Spring v4.3.2.RELEASE
+09:26:41.144 [main] INFO web.SpringStarter - No active profile set, falling back to default profiles: default
+09:26:45.854 [main] INFO web.SpringStarter - Started SpringStarter in 5.155 seconds (JVM running for 11.687)
+13:51:55.800 [main] INFO web.SpringStarter - Starting web app
+13:51:56.424 [main] INFO web.SpringStarter - Starting SpringStarter on PC13 with PID 9416 (C:\Users\admin\workspace\WeatherService\target\classes started by admin in C:\Users\admin\workspace\WeatherService)
+13:51:56.424 [main] DEBUG web.SpringStarter - Running with Spring Boot v1.4.0.RELEASE, Spring v4.3.2.RELEASE
+13:51:56.425 [main] INFO web.SpringStarter - No active profile set, falling back to default profiles: default
+13:51:58.867 [main] INFO web.SpringStarter - Started SpringStarter in 2.905 seconds (JVM running for 9.155)
